@@ -13,7 +13,12 @@ const App = () => {
   const { insertNode, editNode, deleteNode } = useNode();
 
   const handleInsertNode = (folderId, name, commentText) => {
-    const finalStructure = insertNode(commentsData, folderId, name, commentText);
+    const finalStructure = insertNode(
+      commentsData,
+      folderId,
+      name,
+      commentText
+    );
     setCommentsData(finalStructure);
   };
 
