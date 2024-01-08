@@ -3,6 +3,8 @@ import Action from "../Action";
 import "./styles.css";
 import deleteIcon from "../../assets/bin.png";
 import CommentInput from "./CommentInput";
+import formatDate from "../../helpers/formatDate";
+
 
 const Comments = ({
   handleInsertNode,
@@ -16,6 +18,8 @@ const Comments = ({
   const [showInput, setShowInput] = useState(false);
   const [expand, setExpand] = useState(false);
   const inputRef = useRef(null);
+  const [nameRequired, setNameRequired] = useState(false);
+  const [commentRequired, setCommentRequired] = useState(false);
 
   useEffect(() => {
     inputRef?.current?.focus();
@@ -27,6 +31,20 @@ const Comments = ({
   };
 
   const onAddComment = () => {
+    if (!name) {
+      setNameRequired(true);
+    } else {
+      setNameRequired(false);
+    }
+    if (!commentText) {
+      setCommentRequired(true);
+    } else {
+      setCommentRequired(false);
+    }
+  
+    if (!name || !commentText) {
+      return;
+    }
     if (editMode) {
       handleEditNode(comment.id, inputRef?.current?.innerText);
     } else {
@@ -57,11 +75,16 @@ const Comments = ({
                 commentText={commentText}
                 setCommentText={setCommentText}
                 onAddComment={onAddComment}
+                nameRequired={nameRequired}
+                commentRequired={commentRequired}
               />
             </section>
           </>
         ) : (
           <section className="reply_card">
+            <span className="date">
+              {formatDate(comment.id)}
+            </span>
             <h4
               suppressContentEditableWarning={editMode}
               style={{ wordWrap: "break-word" }}
@@ -137,13 +160,17 @@ const Comments = ({
               autoFocus
               placeholder="Name"
               onChange={(e) => setName(e.target.value)}
+              required
               />
+              {nameRequired && !name && <span style={{ color: 'red', fontSize: '12px' }}>Name is required</span>}
             <input
               type="text"
               autoFocus
               placeholder="Comment"
               onChange={(e) => setCommentText(e.target.value)}
+              required
               />
+              {commentRequired && !commentText && <span style={{ color: 'red', fontSize: '12px' }}>Comment is required</span>}
             <Action
               className="comment"
               type="POST"

@@ -1,14 +1,19 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Comments from "./components/Comments/Comments";
 import useNode from "./hooks/useNode";
 import "./styles.css";
 
-const comments = {
+const comments = JSON.parse(localStorage.getItem("commentsData")) || {
   id: 1,
   items: [],
 };
 const App = () => {
   const [commentsData, setCommentsData] = useState(comments);
+  
+  useEffect(() => {
+    localStorage.setItem("commentsData",JSON.stringify(commentsData))
+  }, [commentsData])
+  
 
   const { insertNode, editNode, deleteNode } = useNode();
 

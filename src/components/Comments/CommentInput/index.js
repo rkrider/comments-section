@@ -1,6 +1,6 @@
 import Action from "../../Action";
 
-const CommentInput = ({ name, setName, commentText, setCommentText, onAddComment }) => {
+const CommentInput = ({ name, setName, commentText, setCommentText, onAddComment, nameRequired, commentRequired }) => {
     return (
       <>
         <input
@@ -11,6 +11,7 @@ const CommentInput = ({ name, setName, commentText, setCommentText, onAddComment
           placeholder="Name..."
           required
         />
+        {nameRequired && !name && <span style={{ color: 'red', fontSize: '12px'}}>Name is required</span>}
         <input
           type="text"
           autoFocus
@@ -19,6 +20,7 @@ const CommentInput = ({ name, setName, commentText, setCommentText, onAddComment
           placeholder="Comment..."
           required
         />
+        {commentRequired && !commentText && <span style={{ color: 'red', fontSize: '12px'}}>Comment is required</span>}
         <Action
           className="reply comment"
           type="POST"

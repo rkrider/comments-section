@@ -6,7 +6,7 @@
 }
 
 .commentContainer{
-    margin-bottom: 8px;
+  margin-bottom: 8px;
 }
 
 .replyInputContainer {
@@ -42,4 +42,9 @@ input {
   padding: 8px 12px;
   background-color: hsl(0deg 0% 96.47%);
   width: 500px;
+}
+
+.date{
+  display: flex;
+  justify-content: flex-end;
 }
